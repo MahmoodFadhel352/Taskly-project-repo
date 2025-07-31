@@ -1,7 +1,7 @@
 # ✅ Taskly
 ![Taskly Logo](./public/images/taskly-logo.png)
 Taskly is a simple yet powerful **Task Manager application** designed to help teams and individuals organize projects, manage tasks, and meet deadlines efficiently.  
-It is built with **Node.js, Express, MongoDB, and EJS** using an **MVC architecture**.
+It is built with **Node.js, Express, MongoDB, and JSX** using an **MVC architecture**.
 
 ---
 
@@ -39,7 +39,7 @@ It is built with **Node.js, Express, MongoDB, and EJS** using an **MVC architect
 The application follows the **MVC pattern**:
 
 - **Models**: Define data structures (Users, Projects, Tasks).
-- **Views**: EJS templates render server-side HTML.
+- **Views**: jsx templates render server-side HTML.
 - **Controllers**: Handle business logic and connect routes with models.
 
 ---
@@ -47,7 +47,7 @@ The application follows the **MVC pattern**:
 ## 📊 Tech Stack
 - **Backend**: Node.js, Express
 - **Database**: MongoDB with Mongoose
-- **Frontend**: EJS (server-side rendering)
+- **Frontend**: JSX (server-side rendering)
 - **Styling**: CSS (custom or Bootstrap/Tailwind)
 - **Authentication**: Bcrypt for password hashing
 
@@ -75,19 +75,19 @@ taskly/
 │   ├── projectRoutes.js        # Routes for projects
 │   └── taskRoutes.js           # Routes for tasks
 │
-├── views/                      # EJS templates
+├── views/                      # jsx templates
 │   ├── projects/               # Project pages
-│   │   ├── index.ejs           # List projects
-│   │   ├── show.ejs            # Show single project
-│   │   └── create.ejs          # Create new project
+│   │   ├── index.jsx           # List projects
+│   │   ├── show.jsx            # Show single project
+│   │   └── create.jsx          # Create new project
 │   ├── tasks/                  # Task pages
-│   │   ├── index.ejs           # List tasks
-│   │   └── create.ejs          # Create new task
+│   │   ├── index.jsx           # List tasks
+│   │   └── create.jsx          # Create new task
 │   ├── users/                  # Authentication & profile pages
-│   │   ├── login.ejs           # Login page
-│   │   ├── register.ejs        # Registration page
-│   │   └── profile.ejs         # User profile with tasks
-│   └── layout.ejs              # Base layout template
+│   │   ├── login.jsx           # Login page
+│   │   ├── register.jsx        # Registration page
+│   │   └── profile.jsx         # User profile with tasks
+│   └── layout.jsx              # Base layout template
 │
 ├── public/                     # Static files
 │   ├── css/

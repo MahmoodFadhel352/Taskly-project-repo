@@ -65,6 +65,28 @@ The application follows the **MVC pattern**:
 +------------------+        | • project        |
                             +------------------+
 ```
+## 📊 Routes Table
+| Method | Route                | Description                            | Access  |
+| ------ | -------------------- | -------------------------------------- | ------- |
+| GET    | `/`                  | Home page (overview of projects/tasks) | Auth    |
+| GET    | `/users/register`    | Registration form                      | Public  |
+| POST   | `/users/register`    | Register new user                      | Public  |
+| GET    | `/users/login`       | Login form                             | Public  |
+| POST   | `/users/login`       | Authenticate user                      | Public  |
+| GET    | `/users/profile/:id` | View profile & assigned tasks          | Auth    |
+| GET    | `/projects`          | List all projects                      | Auth    |
+| GET    | `/projects/new`      | New project form                       | Manager |
+| POST   | `/projects`          | Create project                         | Manager |
+| GET    | `/projects/:id`      | Show project & its tasks               | Auth    |
+| PUT    | `/projects/:id`      | Update project                         | Manager |
+| DELETE | `/projects/:id`      | Delete project                         | Manager |
+| GET    | `/tasks/new`         | New task form                          | Manager |
+| POST   | `/tasks`             | Create task                            | Manager |
+| GET    | `/tasks/:id`         | Show task details                      | Auth    |
+| PUT    | `/tasks/:id`         | Update task (status, assignee, etc.)   | Manager |
+| DELETE | `/tasks/:id`         | Delete task                            | Manager |
+
+---
 
 ## 📊 Tech Stack
 - **Backend**: Node.js, Express

@@ -41,8 +41,30 @@ The application follows the **MVC pattern**:
 - **Models**: Define data structures (Users, Projects, Tasks).
 - **Views**: jsx templates render server-side HTML.
 - **Controllers**: Handle business logic and connect routes with models.
-
----
+```plaintext
++------------------+
+|      User        |
+|------------------|
+| • name           |
+| • email          |
+| • password       |
+| • role           |
+| • projects[]     |
+| • tasks[]        |
++--------+---------+
+         |
+         v
++------------------+        +------------------+
+|     Project      |<------ |      Task        |
+|------------------|        |------------------|
+| • title          |        | • title          |
+| • description    |        | • description    |
+| • deadline       |        | • status         |
+| • teamMembers[]  |        | • dueDate        |
+| • tasks[]        |        | • assignee       |
++------------------+        | • project        |
+                            +------------------+
+```
 
 ## 📊 Tech Stack
 - **Backend**: Node.js, Express

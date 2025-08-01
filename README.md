@@ -103,42 +103,52 @@ The application follows the **MVC pattern**:
 ```plaintext
 taskly/
 │
-├── models/                     # Database + Schemas
-│   ├── db.js                   # MongoDB connection file
-│   ├── User.js                 # User schema
-│   ├── Project.js              # Project schema
-│   └── Task.js                 # Task schema
+├── models/                     
+│   ├── db.js                  
+│   ├── User.js                
+│   ├── Project.js             
+│   └── Task.js                
 │
-├── controllers/                # Route logic
-│   ├── userController.js       # Handles user registration, login, profiles
-│   ├── projectController.js    # Handles CRUD for projects
-│   └── taskController.js       # Handles CRUD for tasks
+├── controllers/               
+│   ├── user/
+│   │   ├── userDataController.js    
+│   │   ├── userRouteController.js   
+│   │   └── userViewController.js    
+│   │
+│   ├── project/
+│   │   ├── projectDataController.js
+│   │   ├── projectRouteController.js
+│   │   └── projectViewController.js
+│   │
+│   └── task/
+│       ├── taskDataController.js
+│       ├── taskRouteController.js
+│       └── taskViewController.js
 │
-├── routes/                     # Express route files
-│   ├── userRoutes.js           # Routes for authentication and profiles
-│   ├── projectRoutes.js        # Routes for projects
-│   └── taskRoutes.js           # Routes for tasks
+├── views/                      
+│   ├── projects/
+│   │   ├── Index.jsx           
+│   │   ├── Show.jsx            
+│   │   └── Create.jsx          
+│   ├── tasks/
+│   │   ├── Index.jsx           
+│   │   └── Create.jsx          
+│   ├── users/
+│   │   ├── Login.jsx           
+│   │   ├── Register.jsx        
+│   │   └── Profile.jsx         
+│   └── Layout.jsx              
 │
-├── views/                      # jsx templates
-│   ├── projects/               # Project pages
-│   │   ├── index.jsx           # List projects
-│   │   ├── show.jsx            # Show single project
-│   │   └── create.jsx          # Create new project
-│   ├── tasks/                  # Task pages
-│   │   ├── index.jsx           # List tasks
-│   │   └── create.jsx          # Create new task
-│   ├── users/                  # Authentication & profile pages
-│   │   ├── login.jsx           # Login page
-│   │   ├── register.jsx        # Registration page
-│   │   └── profile.jsx         # User profile with tasks
-│   └── layout.jsx              # Base layout template
-│
-├── public/                     # Static files
+├── public/                     
 │   ├── css/
-│   │   └── style.css           # Stylesheet
+│   │   └── style.css           
 │   └── images/
-│       └── taskly-logo.png     # App logo
+│       └── taskly-logo.png     
 │
-├── .env                        # Environment variables
-├── app.js                      # Express application entry point
-└── package.json                # Dependencies and scripts
+├── .env                        
+├── app.js                      # Express app configuration (middleware, view engine, routes wired)
+├── server.js                   # Actual process entry point; imports app.js and starts the listener
+├── .gitignore                 # Git ignore rules
+└── package.json
+
+```

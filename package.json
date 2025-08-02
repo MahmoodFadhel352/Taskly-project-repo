@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "![Taskly Logo](./public/images/taskly-logo.png)\r Taskly is a simple yet powerful **Task Manager application** designed to help teams and individuals organize projects, manage tasks, and meet deadlines efficiently.  \r It is built with **Node.js, Express, MongoDB, and JSX** using an **MVC architecture**.",
   "main": "app.js",
- "scripts": {
+   "scripts": {
     "test": "jest",
     "dev": "nodemon",
-    "start": "node server.js"
+    "start": "node server.js",
+    "load": "artillery run artillery.yml"
   },
   "jest": {
     "testEnvironment": "node"

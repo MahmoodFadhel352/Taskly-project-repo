@@ -1,35 +1,34 @@
-// controllers/user/userDataController.js
 const User = require('../../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-// Helper to extract token
-const getTokenFromRequest = (req) => {
-  if (req.query.token) return req.query.token;
-  if (req.header('Authorization')) return req.header('Authorization').replace('Bearer ', '');
-  return null;
-};
-
-// Auth middleware
 exports.auth = async (req, res, next) => {
   try {
-    const token = getTokenFromRequest(req);
-    if (!token) return res.status(401).send('Not authorized: token missing');
+    let token;
+    if (req.query.token) {
+      token = req.query.token;
+    } else if (req.header('Authorization')) {
+      token = req.header('Authorization').replace('Bearer ', '');
+    } else {
+      throw new Error('No token provided');
+    }
 
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(payload._id);
-    if (!user) return res.status(401).send('Not authorized: user not found');
+    const data = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findOne({ _id: data._id });
+    if (!user) {
+      throw new Error();
+    }
 
     req.user = user;
     res.locals.data = res.locals.data || {};
     res.locals.data.token = token;
     next();
   } catch (error) {
-    res.status(401).send('Not authorized');
+    res.locals.error = 'Not authorized. Please log in.';
+    return res.redirect('/users/login');
   }
 };
 
-// Register
 exports.createUser = async (req, res, next) => {
   try {
     const user = new User(req.body);
@@ -40,17 +39,23 @@ exports.createUser = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    res.status(400).render('users/Register', { error: error.message, form: req.body });
+    res.locals.error = error.message;
+    res.locals.form = {
+      name: req.body.name,
+      email: req.body.email,
+      role: req.body.role
+    };
+    next();
   }
 };
 
-// Login
 exports.loginUser = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
-    const invalid = !user || !(await bcrypt.compare(req.body.password, user.password));
-    if (invalid) {
-      return res.status(400).render('users/Login', { error: 'Invalid credentials', form: { email: req.body.email } });
+    if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
+      res.locals.error = 'Invalid login credentials';
+      res.locals.form = { email: req.body.email };
+      return next();
     }
     const token = user.generateAuthToken();
     res.locals.data = res.locals.data || {};
@@ -58,29 +63,28 @@ exports.loginUser = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    res.status(400).render('users/Login', { error: error.message });
+    res.locals.error = error.message;
+    res.locals.form = { email: req.body.email };
+    next();
   }
 };
 
-// Update (only allowed fields)
 exports.updateUser = async (req, res) => {
   try {
-    const allowed = ['name', 'email', 'password', 'role'];
-    const updates = Object.keys(req.body).filter((u) => allowed.includes(u));
-    const user = await User.findById(req.params.id);
-    if (!user) return res.status(404).send('User not found');
+    const updates = Object.keys(req.body);
+    const user = await User.findOne({ _id: req.params.id });
+    if (!user) return res.status(404).json({ message: 'User not found' });
 
     updates.forEach((update) => {
       user[update] = req.body[update];
     });
     await user.save();
-    res.json(user); // toJSON transform hides password
+    res.json(user);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
 
-// Delete
 exports.deleteUser = async (req, res) => {
   try {
     await req.user.deleteOne();

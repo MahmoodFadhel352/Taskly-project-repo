@@ -11,7 +11,7 @@ const app = express()
 app.set('view engine', 'jsx')
 app.engine('jsx', jsxEngine())
 
-//app.use(express.json()) this is new this for the api
+app.use(express.json()) //this is new this for the api
 app.use(express.urlencoded({ extended: true })) // req.body
 app.use(methodOverride('_method')) // <====== add method override
 app.use((req, res, next) => {

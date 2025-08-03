@@ -1,6 +1,6 @@
 // controllers/user/userDataController.js
 const User = require('../../models/User');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 // Helper to extract token

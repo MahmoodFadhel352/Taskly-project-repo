@@ -23,7 +23,7 @@ app.use(morgan('dev'))
 
 // Web routes (for views)
 app.use('/users', userRoutes)
-//app.use('/projects', projectsRouter)
+app.use('/projects', projectsRouter)
 //app.use('/tasks', tasksRouter)
 
 // API routes (for JSON responses)

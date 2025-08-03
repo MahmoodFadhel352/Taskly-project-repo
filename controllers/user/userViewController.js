@@ -20,9 +20,6 @@ const viewController = {
       userProjects: res.locals.userProjects || [],
       userTasks: res.locals.userTasks || []
     });
-  },
-  redirectToDashboard(req, res) {
-    res.redirect('/');
   }
 };
 

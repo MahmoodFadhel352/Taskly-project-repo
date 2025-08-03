@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const dataController = require('./userDataController');
 const viewController = require('./userViewController');
+const projectViewController = require('../project/projectViewController');
 
 // Registration form
 router.get('/register', viewController.showRegister);
@@ -9,7 +10,7 @@ router.get('/register', viewController.showRegister);
 // Signup action
 router.post('/register', dataController.createUser, (req, res) => {
   if (res.locals.data && res.locals.data.token) {
-    return viewController.redirectToDashboard(req, res);
+    return projectViewController.redirectToDashboard(req, res);
   }
   viewController.showRegister(req, res);
 });
@@ -20,7 +21,7 @@ router.get('/login', viewController.showLogin);
 // Login action
 router.post('/login', dataController.loginUser, (req, res) => {
   if (res.locals.data && res.locals.data.token) {
-    return viewController.redirectToDashboard(req, res);
+    return projectViewController.redirectToDashboard(req, res);
   }
   viewController.showLogin(req, res);
 });

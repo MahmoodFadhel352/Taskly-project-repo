@@ -1,34 +1,37 @@
-// controllers/project/projectViewController.js
-const RESOURCE_PATH = '/projects';
-
+const RESOURCE_PATH = '/projects'
 const viewController = {
-  showList(req, res) {
-    const projects = res.locals.projects || [];
-    res.render('projects/Index', { projects, title: 'Projects' });
+  signUp(req, res, next){
+    res.render('/auth/SignUp')
   },
-
-  redirectToDashboard(req, res) {
-    if (res.locals.data && res.locals.data.token) {
-      return res.redirect(`${RESOURCE_PATH}?token=${encodeURIComponent(res.locals.data.token)}`);
-    }
-    res.redirect(RESOURCE_PATH);
+  signIn(req, res, next){
+    res.render('/auth/SignIn')
   },
-
-  showNewForm(req, res) {
-    res.render('projects/Create', {
-      title: 'New Project',
-      error: res.locals.error || null,
-      form: res.locals.form || {}
-    });
+  index(req, res, next){
+    res.render('projects/Index', res.locals.data)
   },
-
-  showProject(req, res) {
-    const project = res.locals.project;
-    if (!project) {
-      return res.status(404).send(res.locals.error || 'Project not found');
-    }
-    res.render('projects/Show', { project, title: project.title, error: res.locals.error || null });
+  show(req, res, next){
+    res.render('projects/Show', res.locals.data)
+  },
+  edit(req, res, next){
+    res.render('projects/Edit', res.locals.data)
+  },
+  newView(req, res, next){
+    res.render('projects/New', res.locals.data)
+  },
+  redirectHome(req, res, next){
+    if(res.locals.data.token){
+      res.redirect(`${RESOURCE_PATH}?token=${res.locals.data.token}`)
+    }else {
+      res.redirect(RESOURCE_PATH)
+    } 
+  },
+  redirectShow(req, res, next){
+     if(res.locals.data.token){
+      res.redirect(`${RESOURCE_PATH}/${req.params.id}?token=${res.locals.data.token}`)
+    }else {
+      res.redirect(`${RESOURCE_PATH}/${req.params.id}`)
+    } 
   }
-};
+}
 
-module.exports = viewController;
+module.exports = viewController

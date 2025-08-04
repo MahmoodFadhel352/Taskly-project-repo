@@ -1,93 +1,57 @@
-// controllers/project/projectDataController.js
-const Project = require('../../models/Project');
+const Project = require('../../models/Project')
 
-exports.listProjects = async (req, res, next) => {
-  try {
-    const projects = await Project.find()
-      .populate('teamMembers', 'name email role')
-      .populate('tasks'); // tasks may be populated further downstream
-    res.locals.projects = projects;
-    next();
-  } catch (err) {
-    res.locals.error = err.message;
-    next();
+const dataController = {}
+dataController.index = async (req,res,next) => {
+   try {
+    const user = await req.user.populate('projects')
+    res.locals.data.projects = user.projects
+    next()
+   } catch(error) {
+    res.status(400).send({ message: error.message })
   }
-};
+}
 
-exports.createProject = async (req, res, next) => {
-  try {
-    const { title, description, deadline, teamMembers } = req.body;
-    const project = new Project({
-      title,
-      description,
-      deadline: deadline || null,
-      teamMembers: teamMembers || [],
-      tasks: []
-    });
-    await project.save();
-    res.locals.project = project;
-    next();
-  } catch (err) {
-    res.locals.error = err.message;
-    res.locals.form = {
-      title: req.body.title,
-      description: req.body.description,
-      deadline: req.body.deadline,
-      teamMembers: req.body.teamMembers
-    };
-    next();
-  }
-};
-
-exports.getProjectById = async (req, res, next) => {
-  try {
-    const project = await Project.findById(req.params.id)
-      .populate('teamMembers', 'name email role')
-      .populate({
-        path: 'tasks',
-        populate: { path: 'assignee', select: 'name email' } // if Task schema has assignee
-      });
-    if (!project) {
-      res.status(404);
-      res.locals.error = 'Project not found';
-      return next();
+dataController.destroy = async (req, res, next ) => {
+    try {
+         await Project.findOneAndDelete({'_id': req.params.id }).then(() => {
+            next()
+         })
+    } catch (error) {
+      res.status(400).send({ message: error.message })
     }
-    res.locals.project = project;
-    next();
-  } catch (err) {
-    res.locals.error = err.message;
-    next();
-  }
-};
+}
 
-exports.updateProject = async (req, res, next) => {
-  try {
-    const project = await Project.findById(req.params.id);
-    if (!project) {
-      res.status(404);
-      res.locals.error = 'Project not found';
-      return next();
+dataController.update = async (req, res, next) => {
+    try {
+      res.locals.data.project = await Project.findByIdAndUpdate(req.params.id, req.body, { new: true })
+      next()
+    } catch (error) {
+      res.status(400).send({ message: error.message })
     }
-    const allowed = ['title', 'description', 'deadline', 'teamMembers'];
-    Object.keys(req.body).forEach((k) => {
-      if (allowed.includes(k)) {
-        project[k] = req.body[k];
-      }
-    });
-    await project.save();
-    res.locals.project = project;
-    next();
-  } catch (err) {
-    res.locals.error = err.message;
-    next();
-  }
-};
+}
 
-exports.deleteProject = async (req, res) => {
-  try {
-    await Project.findByIdAndDelete(req.params.id);
-    res.redirect('/projects');
-  } catch (err) {
-    res.status(400).send(err.message);
-  }
-};
+dataController.create = async (req, res, next) => {
+    try {
+      res.locals.data.project = await Project.create(req.body)
+      req.user.projects.addToSet({_id: res.locals.data.project._id })
+      await req.user.save()
+      next()
+    } catch (error) {
+      res.status(400).send({ message: error.message })
+    }
+}
+
+dataController.show = async (req, res, next) => {
+    try {
+        res.locals.data.project = await Project.findById(req.params.id)
+        if(!res.locals.data.project){
+            throw new error(`could not locate a project with the id ${req.params.id}`)
+        }
+        next()
+    } catch (error) {
+      res.status(400).send({ message: error.message })
+    }
+}
+
+
+module.exports = dataController

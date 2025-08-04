@@ -6,10 +6,8 @@ const projectSchema = new mongoose.Schema(
     title: { type: String, required: true },
     description: String,
     deadline: Date,
-    teamMembers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Task' }]
   },
-  { timestamps: true }
 );
 
 const Project = mongoose.model('Project', projectSchema);

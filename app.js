@@ -2,10 +2,9 @@ const express = require('express')
 const morgan = require('morgan')
 const jsxEngine = require('jsx-view-engine')
 const methodOverride = require('method-override')
-const userRoutes = require('./controllers/user/userRouteController')
+const userRoutes = require('./controllers/auth/userRouteController')
 const projectsRouter = require('./controllers/project/projectRouteController')
 const tasksRouter = require('./controllers/task/taskRouteController')
-
 //const apiRoutes = require('./routes/apiRoutes') might use it later
 const app = express()
 app.set('view engine', 'jsx')

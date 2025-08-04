@@ -1,59 +1,21 @@
-// controllers/project/projectRouteController.js
 const express = require('express');
 const router = express.Router();
-const projectData = require('./projectDataController');
-const projectView = require('./projectViewController');
-const userDataController = require('../user/userDataController');
-const requireManager = require('../../middleware/requireManager');
-
-// List all projects (dashboard)
-router.get(
-  '/',
-  userDataController.auth,
-  projectData.listProjects,
-  projectView.showList
-);
-
-// New project form
-router.get(
-  '/new',
-  userDataController.auth,
-  requireManager,
-  projectView.showNewForm
-);
-
-// Create
-router.post(
-  '/',
-  userDataController.auth,
-  requireManager,
-  projectData.createProject,
-  projectView.redirectToDashboard
-);
-
-// Show single project
-router.get(
-  '/:id',
-  userDataController.auth,
-  projectData.getProjectById,
-  projectView.showProject
-);
-
-// Update project (form submission assumed via method override)
-router.put(
-  '/:id',
-  userDataController.auth,
-  requireManager,
-  projectData.updateProject,
-  projectView.showProject
-);
-
+const viewController = require('./projectViewController.js')
+const dataController = require('./projectDataController.js')
+const authDataController = require('../auth/userDataController.js')
+// Index
+router.get('/', authDataController.auth, dataController.index, viewController.index);
+// New
+router.get('/new', authDataController.auth, viewController.newView );
 // Delete
-router.delete(
-  '/:id',
-  userDataController.auth,
-  requireManager,
-  projectData.deleteProject
-);
-
+router.delete('/:id',authDataController.auth, dataController.destroy, viewController.redirectHome);
+// Update
+router.put('/:id',authDataController.auth, dataController.update, viewController.redirectShow);
+// Create
+router.post('/', authDataController.auth, dataController.create, viewController.redirectHome);
+// Edit
+router.get('/:id/edit', authDataController.auth, dataController.show, viewController.edit);
+// Show
+router.get('/:id', authDataController.auth, dataController.show, viewController.show);
+// export router
 module.exports = router;

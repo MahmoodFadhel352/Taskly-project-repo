@@ -9,7 +9,7 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: #2c3e50;
-    background-image: url('/public/images/backgroundImage.png');
+    background-image: url('/images/backgroundImage.png');
     background-size: cover;
     min-height: 100vh;
     padding: 20px;

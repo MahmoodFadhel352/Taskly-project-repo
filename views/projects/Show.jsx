@@ -2,6 +2,7 @@ const React = require('react')
 const Layout = require('../Layout')
 
 function Show(props){
+    const {project} = props
     return(
         <Layout project={props.project}>
             <h1>📋 {props.project.title}</h1>

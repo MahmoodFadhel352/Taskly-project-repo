@@ -44,6 +44,9 @@ function Index (props){
             <a href={`/projects/new?token=${props.token}`} className="btn btn-primary2">
                     ➕ Add New Project
                 </a>
+            <a href="/users/signin" className="btn btn-primary2">
+                    Log out
+                </a>
         </Layout>
     )
 }

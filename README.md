@@ -1,6 +1,6 @@
 # ✅ Taskly
 ![Taskly Logo](./public/images/taskly-logo.png)
-Taskly is a simple yet powerful **Task Manager application** designed to help teams and individuals organize projects, manage tasks, and meet deadlines efficiently.  
+Taskly is a simple yet powerful **Task Manager application** designed to help individuals organize projects, manage tasks, and meet deadlines efficiently.  
 It is built with **Node.js, Express, MongoDB, and JSX** using an **MVC architecture**.
 
 ---
@@ -8,30 +8,22 @@ It is built with **Node.js, Express, MongoDB, and JSX** using an **MVC architect
 ## 📌 Core Concepts
 
 ### 👤 User Management
-- Users can **register, login, and manage their profile**.
-- Roles:
-  - **Admin**: Full access to manage projects, tasks, and users.
-  - **Manager**: Can create projects and assign tasks.
-  - **Member**: Can view and update their own tasks.
+- Users can **register, login, and manage their projects**.
 
 ### 📂 Projects
 - Each project has:
   - Title  
   - Description  
-  - Deadline  
-  - Assigned Team Members  
+  - Deadline   
 - Projects act as containers for tasks.
 
 ### 📝 Tasks
 - Each task belongs to a project and has:
   - Title & description  
-  - Status: *To Do*, *In Progress*, *Completed*  
-  - Assignee (a user)  
-  - Due date  
+  - Status: *To Do or Pending*, *Completed*  
 
 ### 📅 Deadlines
-- Projects and tasks can have deadlines.
-- Tasks marked overdue will be highlighted for better visibility.
+- Projects have deadlines.
 
 ---
 
@@ -42,49 +34,44 @@ The application follows the **MVC pattern**:
 - **Views**: jsx templates render server-side HTML.
 - **Controllers**: Handle business logic and connect routes with models.
 ```plaintext
-+------------------+
-|      User        |
-|------------------|
-| • name           |
-| • email          |
-| • password       |
-| • role           |
-| • projects[]     |
-| • tasks[]        |
-+--------+---------+
-         |
-         v
-+------------------+        +------------------+
-|     Project      |<------ |      Task        |
-|------------------|        |------------------|
-| • title          |        | • title          |
-| • description    |        | • description    |
-| • deadline       |        | • status         |
-| • teamMembers[]  |        | • dueDate        |
-| • tasks[]        |        | • assignee       |
-+------------------+        | • project        |
-                            +------------------+
++------------------+            +------------------+            +------------------+
+|      User        |            |     Project      |            |      Task        |
+|------------------|            |------------------|            |------------------|
+| • name           | ◀──┐       | • title          |            | • title          |
+| • email          |    └──►    | • description    |            | • description    |
+| • password       |            | • deadline       |            | • status (Bool)  |
+| • projects[]     |            | • tasks[]        |◄──┐        |                  |
+| • tasks[]        |            +------------------+   │        +------------------+
++------------------+                                   │
+                                                       │
+                                                       │
+                                          Each Task────┘ Belongs to one Project
+
 ```
 ## 📊 Routes Table
-| Method | Route                | Description                            | Access  |
-| ------ | -------------------- | -------------------------------------- | ------- |
-| GET    | `/`                  | Home page (overview of projects/tasks) | Auth    |
-| GET    | `/users/register`    | Registration form                      | Public  |
-| POST   | `/users/register`    | Register new user                      | Public  |
-| GET    | `/users/login`       | Login form                             | Public  |
-| POST   | `/users/login`       | Authenticate user                      | Public  |
-| GET    | `/users/profile/:id` | View profile & assigned tasks          | Auth    |
-| GET    | `/projects`          | List all projects                      | Auth    |
-| GET    | `/projects/new`      | New project form                       | Manager |
-| POST   | `/projects`          | Create project                         | Manager |
-| GET    | `/projects/:id`      | Show project & its tasks               | Auth    |
-| PUT    | `/projects/:id`      | Update project                         | Manager |
-| DELETE | `/projects/:id`      | Delete project                         | Manager |
-| GET    | `/tasks/new`         | New task form                          | Manager |
-| POST   | `/tasks`             | Create task                            | Manager |
-| GET    | `/tasks/:id`         | Show task details                      | Auth    |
-| PUT    | `/tasks/:id`         | Update task (status, assignee, etc.)   | Manager |
-| DELETE | `/tasks/:id`         | Delete task                            | Manager |
+| Method | Route                                 | Description                             | Access |
+| ------ | ------------------------------------- | --------------------------------------- | ------ |
+| GET    | `/users/signup`                       | Show registration form                  | Public |
+| POST   | `/users`                              | Create new user (signup)                | Public |
+| GET    | `/users/login`                        | Show login form                         | Public |
+| POST   | `/users/login`                        | Authenticate user                       | Public |
+| PUT    | `/users/:id`                          | Update user profile                     | Auth   |
+| DELETE | `/users/:id`                          | Delete own account                      | Auth   |
+| GET    | `/projects`                           | List all projects                       | Auth   |
+| GET    | `/projects/new`                       | Show “new project” form                 | Auth   |
+| POST   | `/projects`                           | Create project                          | Auth   |
+| GET    | `/projects/:id`                       | Show project detail (with “View Tasks”) | Auth   |
+| GET    | `/projects/:id/edit`                  | Show “edit project” form                | Auth   |
+| PUT    | `/projects/:id`                       | Update project                          | Auth   |
+| DELETE | `/projects/:id`                       | Delete project                          | Auth   |
+| GET    | `/projects/:projectId/tasks`          | List tasks for a project                | Auth   |
+| GET    | `/projects/:projectId/tasks/new`      | Show “new task” form                    | Auth   |
+| POST   | `/projects/:projectId/tasks`          | Create task under a project             | Auth   |
+| GET    | `/projects/:projectId/tasks/:id`      | Show task detail                        | Auth   |
+| GET    | `/projects/:projectId/tasks/:id/edit` | Show “edit task” form                   | Auth   |
+| PUT    | `/projects/:projectId/tasks/:id`      | Update task                             | Auth   |
+| DELETE | `/projects/:projectId/tasks/:id`      | Delete task                             | Auth   |
+
 
 ---
 
@@ -103,17 +90,18 @@ The application follows the **MVC pattern**:
 ```plaintext
 taskly/
 │
-├── models/                     
-│   ├── db.js                  
-│   ├── User.js                
-│   ├── Project.js             
-│   └── Task.js                
+├── models/
+│   ├── db.js
+│   ├── User.js
+│   ├── Project.js
+│   └── Task.js
 │
-├── controllers/               
-│   ├── user/
-│   │   ├── userDataController.js    
-│   │   ├── userRouteController.js   
-│   │   └── userViewController.js    
+├── controllers/
+│   ├── auth/
+│   │   ├── apiController.js          ← new API controller for JSON endpoints
+│   │   ├── userDataController.js
+│   │   ├── userRouteController.js
+│   │   └── userViewController.js
 │   │
 │   ├── project/
 │   │   ├── projectDataController.js
@@ -125,30 +113,39 @@ taskly/
 │       ├── taskRouteController.js
 │       └── taskViewController.js
 │
-├── views/                      
+├── routes/                         ← new top-level router directory
+│   └── apiRoutes.js                ← central place to mount all /api/* endpoints
+│
+├── views/
+│   ├── auth/
+│   │   ├── SignIn.jsx
+│   │   └── SignUp.jsx
+│   │
 │   ├── projects/
-│   │   ├── Index.jsx           
-│   │   ├── Show.jsx            
-│   │   └── Create.jsx          
+│   │   ├── Index.jsx
+│   │   ├── New.jsx
+│   │   ├── Show.jsx
+│   │   └── Edit.jsx
+│   │
 │   ├── tasks/
-│   │   ├── Index.jsx           
-│   │   └── Create.jsx          
-│   ├── users/
-│   │   ├── Login.jsx           
-│   │   ├── Register.jsx        
-│   │   └── Profile.jsx         
-│   └── Layout.jsx              
+│   │   ├── Index.jsx
+│   │   ├── New.jsx
+│   │   ├── Show.jsx
+│   │   └── Edit.jsx
+│   │
+│   ├── Layout.jsx
+│   └── NavBar.jsx
 │
-├── public/                     
+├── public/
 │   ├── css/
-│   │   └── style.css           
+│   │   └── style.css
 │   └── images/
-│       └── taskly-logo.png     
+│       └── backgroundImage.png
 │
-├── .env                        
-├── app.js                      # Express app configuration (middleware, view engine, routes wired)
-├── server.js                   # Actual process entry point; imports app.js and starts the listener
-├── .gitignore                 # Git ignore rules
+├── .env
+├── app.js
+├── server.js
+├── .gitignore
 └── package.json
 
 ```

@@ -21,7 +21,7 @@ function New (props) {
                 <div className="form-group">
                     <label htmlFor="description">Description:</label>
                     <input 
-                        type="textarea" 
+                        type="text" 
                         id="description"
                         name="description" 
                         placeholder="Enter your project description"

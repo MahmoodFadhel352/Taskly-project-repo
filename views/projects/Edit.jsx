@@ -24,7 +24,7 @@ function Edit (props) {
                  <div className="form-group">
                     <label htmlFor="description">Description:</label>
                     <input 
-                        type="textarea" 
+                        type="text" 
                         id="description"
                         name="description"
                         defaultValue={description}

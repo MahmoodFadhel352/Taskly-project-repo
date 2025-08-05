@@ -9,9 +9,7 @@ function Index (props){
             
             <div className="d-flex justify-between align-center mb-3">
                 <h2>Your Projects</h2>
-                <a href={`/projects/new?token=${props.token}`} className="btn btn-primary">
-                    ➕ Add New Project
-                </a>
+                
             </div>
             
             {projects.length === 0 ? (
@@ -41,7 +39,11 @@ function Index (props){
                         </div>
                     ))}
                 </div>
+                
             )}
+            <a href={`/projects/new?token=${props.token}`} className="btn btn-primary2">
+                    ➕ Add New Project
+                </a>
         </Layout>
     )
 }

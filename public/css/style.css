@@ -17,7 +17,7 @@ body {
 
 /* Container */
 .container {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
     background: rgba(255, 255, 255, 0.95);
     border-radius: 15px;
@@ -30,7 +30,7 @@ h1 {
     font-size: 2.5rem;
     text-align: center;
     margin-bottom: 2rem;
-    color: #27ae60;
+    color: #9c746d;
 }
 
 h2 {
@@ -85,7 +85,7 @@ input[type="password"]:focus {
 }
 
 .btn-primary {
-    background: #27ae60;
+    background: #a1b428;
     color: white;
 }
 
@@ -93,9 +93,18 @@ input[type="password"]:focus {
     background: #2ecc71;
     transform: translateY(-2px);
 }
+.btn-primary2 {
+    background: #a1b428;
+    color: white;
+}
+
+.btn-primary2:hover {
+    background: #2ecc71;
+    transform: translateY(-2px);
+}
 
 .btn-secondary {
-    background: #95a5a6;
+    background: #286865;
     color: white;
 }
 

@@ -25,6 +25,9 @@ function Show(props){
                     <a href={`/projects?token=${props.token}`} className="btn btn-secondary">
                         ← Back to All Projects
                     </a>
+                    <a href={`/projects/${props.project._id}/tasks?token=${props.token}`} className="btn btn-primary">
+                        📋 View Tasks
+                    </a>
                     <a href={`/projects/${props.project._id}/edit?token=${props.token}`} className="btn btn-primary">
                         ✏️ Edit {props.project.title}
                     </a>

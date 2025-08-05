@@ -3,6 +3,12 @@ const router = express.Router();
 const viewController = require('./projectViewController.js')
 const dataController = require('./projectDataController.js')
 const authDataController = require('../auth/userDataController.js')
+const taskRoutes= require('../task/taskRouteController.js');
+router.use(
+  '/:projectId/tasks',
+  authDataController.auth,
+  taskRoutes
+);
 // Index
 router.get('/', authDataController.auth, dataController.index, viewController.index);
 // New

@@ -5,6 +5,7 @@ dataController.index = async (req,res,next) => {
    try {
     const user = await req.user.populate('projects')
     res.locals.data.projects = user.projects
+    res.locals.data.userId   = user._id 
     next()
    } catch(error) {
     res.status(400).send({ message: error.message })

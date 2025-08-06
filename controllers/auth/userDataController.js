@@ -42,7 +42,7 @@ exports.loginUser = async (req, res, next) => {
   try{
     const user = await User.findOne({ email: req.body.email })
     if (!user || !await bcrypt.compare(req.body.password, user.password)) {
-      res.status(400).send('Invalid login credentials')
+      res.status(400).send('Invalid login credentials or the account does not exist')
     } else {
       const token = await user.generateAuthToken()
       res.locals.data.token = token 
@@ -54,7 +54,7 @@ exports.loginUser = async (req, res, next) => {
   }
 }
 
-exports.updateUser = async (req, res) => {
+/*exports.updateUser = async (req, res) => {
   try{
     const updates = Object.keys(req.body)
     const user = await User.findOne({ _id: req.params.id })
@@ -65,12 +65,32 @@ exports.updateUser = async (req, res) => {
     res.status(400).json({message: error.message})
   }
   
+}*/
+exports.updateUser = async (req, res, next) => {
+  try {
+    const updates = Object.keys(req.body)
+    const user = await User.findById(req.params.id)
+    updates.forEach(field => {
+      // only overwrite if value provided
+      if (req.body[field] !== '') user[field] = req.body[field]
+    })
+    await user.save()
+
+    // refresh req.user and keep the token for the view
+    req.user = user
+    // token came in via ?token=… or Authorization header; we’ll let auth middleware set it
+    res.locals.data.token = res.locals.data.token
+
+    next()    // ← hand off to the next middleware (your Profile view)
+  } catch (error) {
+    res.status(400).json({ message: error.message })
+  }
 }
 
-exports.deleteUser = async (req, res) => {
+exports.deleteUser = async (req, res, next) => {
   try{
     await req.user.deleteOne()
-    res.json({ message: 'User deleted' })
+    next()
   }catch(error){
     res.status(400).json({message: error.message})
   }

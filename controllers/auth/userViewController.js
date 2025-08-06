@@ -10,7 +10,15 @@ const viewController = {
   },
   redirectToLogin(req, res, next){
     res.redirect('/users/login')
-  }
+  },
+  profile(req, res) {
+    const user = req.user
+    const token = res.locals.data.token
+    res.render('auth/Profile', { user, token })
+  },
+  redirectToSignUp(req, res) {
+  res.redirect('/users/signup')
+}
 
 }
 

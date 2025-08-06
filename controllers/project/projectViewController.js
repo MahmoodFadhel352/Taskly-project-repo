@@ -10,7 +10,6 @@ const viewController = {
     res.render('projects/Index', res.locals.data)
   },
   show(req, res, next){
-    //console.log(res.locals.data)
     res.render('projects/Show', res.locals.data)
   },
   edit(req, res, next){

@@ -54,18 +54,6 @@ exports.loginUser = async (req, res, next) => {
   }
 }
 
-/*exports.updateUser = async (req, res) => {
-  try{
-    const updates = Object.keys(req.body)
-    const user = await User.findOne({ _id: req.params.id })
-    updates.forEach(update => user[update] = req.body[update])
-    await user.save()
-    res.json(user)
-  }catch(error){
-    res.status(400).json({message: error.message})
-  }
-  
-}*/
 exports.updateUser = async (req, res, next) => {
   try {
     const updates = Object.keys(req.body)
@@ -81,7 +69,7 @@ exports.updateUser = async (req, res, next) => {
     // token came in via ?token=… or Authorization header; we’ll let auth middleware set it
     res.locals.data.token = res.locals.data.token
 
-    next()    // ← hand off to the next middleware (your Profile view)
+    next()    // ← hand off to the next middleware
   } catch (error) {
     res.status(400).json({ message: error.message })
   }

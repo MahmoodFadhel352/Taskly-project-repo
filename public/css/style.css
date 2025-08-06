@@ -215,6 +215,8 @@ input[type="password"]:focus {
   color: #286865;
   margin-left: -88px;
 }
-
-
-
+footer {
+  font-size: 1rem;
+  color: #475051;
+  font-weight: 600;
+}

@@ -13,6 +13,9 @@ function Layout(props){
             <div className="container">
                 {props.children}
             </div>
+            <footer className="text-center mt-4 mb-2">
+                Mahmood Kadhem 2025 &#169;
+            </footer>
         </body>
     </html>
  )

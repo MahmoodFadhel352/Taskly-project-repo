@@ -6,6 +6,7 @@
     width="580"
   />
 </p>
+
 Taskly is a simple yet powerful **Task Manager application** designed to help individuals organize projects, manage tasks, and meet deadlines efficiently.  
 It is built with **Node.js, Express, MongoDB, and JSX** using an **MVC architecture**.
 
@@ -15,6 +16,7 @@ It is built with **Node.js, Express, MongoDB, and JSX** using an **MVC architect
 
 ### 👤 User Management
 - Users can **register, login, and manage their projects**.
+- Users can **view, update, and delete their profiles**.
 
 ### 📂 Projects
 - Each project has:
@@ -22,14 +24,17 @@ It is built with **Node.js, Express, MongoDB, and JSX** using an **MVC architect
   - Description  
   - Deadline   
 - Projects act as containers for tasks.
+- Project CRUD – create, view, edit, delete projects
 
 ### 📝 Tasks
 - Each task belongs to a project and has:
   - Title & description  
-  - Status: *To Do or Pending*, *Completed*  
+  - Status: *To Do or Pending*, *Completed*
+- Nested tasks within projects, with status toggling
 
 ### 📅 Deadlines
 - Projects have deadlines.
+
 
 ---
 
@@ -86,12 +91,16 @@ The application follows the **MVC pattern**:
 
 ---
 
-## 📊 Tech Stack
-- **Backend**: Node.js, Express
-- **Database**: MongoDB with Mongoose
-- **Frontend**: JSX (server-side rendering)
-- **Styling**: CSS
-- **Authentication**: Bcrypt for password hashing
+## 🛠️ Technologies Used
+
+- **Node.js** & **Express** – server runtime and web framework  
+- **MongoDB** & **Mongoose** – document database and ODM  
+- **JSX (React)** – server-side templates for views  
+- **Bcrypt** – password hashing  
+- **JSON Web Tokens (JWT)** – stateless auth  
+- **CSS** – custom styling  
+- **dotenv** – environment variable management  
+
 
 
 ---
@@ -99,6 +108,7 @@ The application follows the **MVC pattern**:
 ## 📂 Project Structure
 
 ```plaintext
+
 taskly/
 │
 ├── models/
@@ -109,7 +119,6 @@ taskly/
 │
 ├── controllers/
 │   ├── auth/
-│   │   ├── apiController.js          ← new API controller for JSON endpoints
 │   │   ├── userDataController.js
 │   │   ├── userRouteController.js
 │   │   └── userViewController.js
@@ -124,13 +133,11 @@ taskly/
 │       ├── taskRouteController.js
 │       └── taskViewController.js
 │
-├── routes/                         ← new top-level router directory
-│   └── apiRoutes.js                ← central place to mount all /api/* endpoints
-│
 ├── views/
 │   ├── auth/
 │   │   ├── SignIn.jsx
-│   │   └── SignUp.jsx
+│   │   ├── SignUp.jsx
+│   │   └── Profile.jsx
 │   │
 │   ├── projects/
 │   │   ├── Index.jsx
@@ -151,12 +158,49 @@ taskly/
 │   ├── css/
 │   │   └── style.css
 │   └── images/
-│       └── backgroundImage.png
+│       ├── backgroundImage.png
+│       └── taskly-logo.png
 │
 ├── .env
 ├── app.js
 ├── server.js
 ├── .gitignore
 └── package.json
+
+```
+
+
+## 📈 Future Improvements
+- Implement role-based access (admin vs. regular user)
+
+- Real-time updates via WebSockets (task notifications)
+
+- Drag-and-drop interface for task reordering
+
+- Email reminders for upcoming deadlines
+
+- Mobile-first design or dedicated mobile app
+
+## 🚀 Installation Instructions
+
+```bash
+# 1. Clone this repo
+git clone https://github.com/your-username/taskly.git
+cd taskly
+
+# 2. Install dependencies
+npm install
+# you can get them from the package.json file under "dependencies"
+
+# 3. Set up your .env file (create from .env.example):
+#    MONGODB_URI=your_mongo_connection_string
+#    JWT_SECRET=your_jwt_secret
+cp .env.example .env
+
+# 4. Run the server
+nodemon server.js
+
+# 5. In your browser:
+#    • HTML views at http://localhost:3000/
 
 ```

@@ -1,5 +1,11 @@
 # ✅ Taskly
-![Taskly Logo](./public/images/taskly-logo.png)
+<p align="center">
+  <img
+    src="./public/images/taskly-logo.png"
+    alt="Taskly Logo"
+    width="580"
+  />
+</p>
 Taskly is a simple yet powerful **Task Manager application** designed to help individuals organize projects, manage tasks, and meet deadlines efficiently.  
 It is built with **Node.js, Express, MongoDB, and JSX** using an **MVC architecture**.
 

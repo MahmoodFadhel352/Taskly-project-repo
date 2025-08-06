@@ -32,20 +32,25 @@ The application follows the **MVC pattern**:
 
 - **Models**: Define data structures (Users, Projects, Tasks).
 - **Views**: jsx templates render server-side HTML.
-- **Controllers**: Handle business logic and connect routes with models.
+- **Controllers**: Handle logic and connect routes with models.
 ```plaintext
 +------------------+            +------------------+            +------------------+
 |      User        |            |     Project      |            |      Task        |
 |------------------|            |------------------|            |------------------|
-| • name           | ◀──┐       | • title          |            | • title          |
-| • email          |    └──►    | • description    |            | • description    |
+| • name           |            | • title          |            | • title          |
+| • email          |            | • description    |            | • description    |
 | • password       |            | • deadline       |            | • status (Bool)  |
-| • projects[]     |            | • tasks[]        |◄──┐        |                  |
-| • tasks[]        |            +------------------+   │        +------------------+
-+------------------+                                   │
-                                                       │
-                                                       │
-                                          Each Task────┘ Belongs to one Project
+| • projects[]     |            | • tasks[]        |            |                  |
+| • tasks[]        |            +------------------+            +------------------+
++------------------+                   ▲                              ▲
+                   \                   |                              |
+                    \------------------┘                              |
+                          User.projects[]                             |
+                                                                      |
+       Project.tasks[] ---------------------------------------------- ┘
+
+                    Each Task belongs to one Project
+
 
 ```
 ## 📊 Routes Table
@@ -79,7 +84,7 @@ The application follows the **MVC pattern**:
 - **Backend**: Node.js, Express
 - **Database**: MongoDB with Mongoose
 - **Frontend**: JSX (server-side rendering)
-- **Styling**: CSS (custom or Bootstrap/Tailwind)
+- **Styling**: CSS
 - **Authentication**: Bcrypt for password hashing
 
 

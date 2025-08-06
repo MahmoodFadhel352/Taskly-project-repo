@@ -16,7 +16,7 @@ router.put(
    '/:id',
    dataController.auth,      // re-authenticate & populate req.user + res.locals.data.token
    dataController.updateUser, // apply the changes and call next()
-   viewController.profile     // finally render users/Profile.jsx
+   viewController.signIn     // finally render users/Profile.jsx
  )
 //router.delete('/:id', dataController.auth, dataController.deleteUser)
 router.delete(

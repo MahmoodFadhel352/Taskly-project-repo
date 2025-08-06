@@ -5,7 +5,6 @@ const methodOverride = require('method-override')
 const userRoutes = require('./controllers/auth/userRouteController')
 const projectsRouter = require('./controllers/project/projectRouteController')
 const tasksRouter = require('./controllers/task/taskRouteController')
-//const apiRoutes = require('./routes/apiRoutes') might use it later
 const app = express()
 app.set('view engine', 'jsx')
 app.engine('jsx', jsxEngine())
@@ -25,7 +24,5 @@ app.use('/users', userRoutes)
 app.use('/projects', projectsRouter)
 app.use('/tasks', tasksRouter)
 
-// API routes (for JSON responses)
-//app.use('/api', apiRoutes)
 
 module.exports = app

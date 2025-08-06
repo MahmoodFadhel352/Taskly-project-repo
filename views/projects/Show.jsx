@@ -13,8 +13,7 @@ function Show(props){
                  <div className="project-deadline">Deadline: {new Date(project.deadline).toLocaleDateString()}</div>
                 
                 <p className="mb-3">
-                  Project: {project.title} {project.description ? 'has a description.' : 'is awaiting a description.'}
-                  {' '}
+                  Project: {project.title}
   
                   {new Date(project.deadline) < new Date()
                         ? '⚠️ This project is overdue!'

@@ -105,6 +105,10 @@ The application follows the **MVC pattern**:
 
 ---
 
+## Screensot of the app's main page
+
+![App main page](./public/images/readmesc.png)
+
 ## 📂 Project Structure
 
 ```plaintext

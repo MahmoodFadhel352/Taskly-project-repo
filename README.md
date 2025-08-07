@@ -204,7 +204,7 @@ cp .env.example .env
 # 4. Run the server
 nodemon server.js
 
-# 5. In your browser:
-#    • HTML views at http://localhost:3000/
+# 5. To start the app In your browser:
+#    • HTML views at http://localhost:3000/users
 
 ```
